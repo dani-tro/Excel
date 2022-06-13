@@ -9,7 +9,7 @@ class Cell
 private:
 	virtual std::ostream& do_print(std::ostream&) const = 0;
 	virtual std::optional<float> do_get_value() const;
-public:
+public: 
 	std::ostream& print(std::ostream& out = std::cout) const;
 	std::ostream& println(std::ostream& out = std::cout) const;
 	std::optional<float> get_value() const;
