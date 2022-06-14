@@ -17,7 +17,7 @@ String::String(const std::string& _str) : str{_str}
 
 String::operator float() const
 {
-	uint32_t idx = 0;
-	return get_number(str, idx, '\n');
+	uint32_t idx = 1;
+	return get_number(str, idx, '\"');
 }
 
