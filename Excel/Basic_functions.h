@@ -6,6 +6,7 @@
 bool is_digit(char);
 int get_digit(char);
 float get_number(const std::string&, uint32_t&);
+float get_number(const std::string&, uint32_t&, char delimiter);
 bool is_operation(char);
 uint32_t priority(char);
 std::optional<float> perform_operation(float, char, float);
