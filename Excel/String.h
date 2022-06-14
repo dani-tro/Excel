@@ -12,7 +12,7 @@ private:
 	std::optional<float> do_get_value() const override final;
 public:
 	String(const std::string&);
-	operator std::optional<float>() const;
+	operator float() const;
 };
 
 #endif
