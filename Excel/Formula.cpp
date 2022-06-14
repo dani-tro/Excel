@@ -71,6 +71,11 @@ Formula::operator RPN() const
             }
             operations.pop();
         }
+        else if (formula[idx] == '\"')
+        {
+            result += std::to_string(get_number(formula, ++idx, '\"'));
+            result += " ";
+        }
         idx++;
     }
     while(operations.top() != '(')
