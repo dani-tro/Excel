@@ -6,12 +6,13 @@
 class Int : public Cell
 {
 private:
-	int value;
+	int value = 0;
 
 	std::ostream& do_print(std::ostream&) const override final;
 	std::optional<float> do_get_value() const override final;
 public:
-
+	Int() = default;
+	Int(int);
 };
 
 #endif 

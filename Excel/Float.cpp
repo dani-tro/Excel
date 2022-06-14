@@ -11,3 +11,7 @@ std::optional<float> Float::do_get_value() const
 	return value;
 }
 
+Float::Float(float _value) : value{_value}
+{
+}
+

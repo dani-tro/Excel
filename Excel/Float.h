@@ -6,11 +6,13 @@
 class Float : public Cell
 {
 private:
-	float value;
+	float value = 0.0;
 
 	std::ostream& do_print(std::ostream&) const override final;
 	std::optional<float> do_get_value() const override final;
 public:
+	Float() = default;
+	Float(float);
 };
 
 #endif
