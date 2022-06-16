@@ -2,9 +2,9 @@
 
 std::optional<float> RPN::evaluate() const
 {
-    std::cout << expression << std::endl;
+    
     float tmp, lhs, rhs;
-    std::optional<float> result;
+    std::optional<float> result = 0;
     std::stack<float> numbers;
     uint32_t idx = 0;
     while(idx < expression.size())
