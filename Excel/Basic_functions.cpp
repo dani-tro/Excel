@@ -30,7 +30,7 @@ float get_number(const std::string& str, uint32_t& begin)
 
 float get_number(const std::string& str, uint32_t& begin, char delimiter)
 {
-    
+   
     uint32_t number_of_dots = 0, idx = begin;
     bool is_number = true;
     while (begin < str.size() && str[begin] != delimiter)
@@ -38,7 +38,7 @@ float get_number(const std::string& str, uint32_t& begin, char delimiter)
         if (str[begin] == '.')number_of_dots++;
         if (str[begin] != '.' && is_digit(str[begin]) == false) is_number = false;
         begin++;
-    }
+    } 
     if (number_of_dots > 1 || is_number == false)return 0.0;
     float result = 0.0, dec_power = 1.0;
     bool found_dot = false;
@@ -53,7 +53,8 @@ float get_number(const std::string& str, uint32_t& begin, char delimiter)
             result += get_digit(str[begin]) * dec_power;
         }
         begin++;
-    }std::cout << result << std::endl;
+    }
+    
     return result;
 }
 

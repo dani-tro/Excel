@@ -1,5 +1,5 @@
-#ifndef __BASIC_FUNCTIONS
-#define __BASIC_FUNCTIONS
+#ifndef __BASIC_FUNCTIONS_HPP
+#define __BASIC_FUNCTIONS_HPP
 
 #include "Libraries.h"
 
