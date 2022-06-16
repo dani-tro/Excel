@@ -6,18 +6,27 @@
 #include "Basic_functions.h"
 #include "Table.h"
 
+constexpr uint32_t error_message_length = 5;
+
 class Formula : public Cell
 {
 private:
 	std::string formula;
 	std::optional<float> calculated_value = std::nullopt;
+	bool is_calculated = false;
 
 	std::ostream& do_print(std::ostream&) const override final;
-	std::optional<float> do_get_value() const override final;
-	std::optional<float> evaluate() const;
+	std::istream& do_read_from_file(std::istream&) override final;
+	std::optional<float> do_get_value() override final;
+	void do_evaluate() override final;
+	uint32_t do_get_length_in_symbols() const override final;
+
 public:
-	operator RPN() const;
+	Formula() = default;
+	Formula(const Formula&) = default;
 	Formula(const std::string&);
+	operator RPN() const;
+	friend std::istream& operator>>(std::istream& in, Formula&);
 };
 
 #endif
