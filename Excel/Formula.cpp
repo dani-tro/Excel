@@ -1,6 +1,6 @@
 #include "Formula.h"
 
-std::ostream& Formula::do_print(std::ostream& out) const
+std::ostream& Formula::do_print_to_stream(std::ostream& out) const
 {
     if (calculated_value == std::nullopt)out << "ERROR";
     else out << std::setprecision(float_fixed_precision) << std::fixed << calculated_value.value();
@@ -18,16 +18,16 @@ std::istream& Formula::do_read_from_file(std::istream& in)
 
 std::optional<float> Formula::do_get_value()
 {
-    
-    if (is_calculated == false)do_evaluate();
+    if (is_being_evaluated == true)return std::nullopt;
+    do_evaluate();
     return calculated_value;
 }
 
 void Formula::do_evaluate()
 {
-    if (is_calculated == true)return;
-    is_calculated = true;
+    is_being_evaluated = true;
     calculated_value = RPN(*this).evaluate();
+    is_being_evaluated = false;
 }
 
 uint32_t Formula::do_get_length_in_symbols() const
@@ -42,6 +42,11 @@ uint32_t Formula::do_get_length_in_symbols() const
         length++;
     }
     return length + float_fixed_precision + dot_length;
+}
+
+void Formula::do_print_to_file(std::ofstream& file) const
+{
+    file << formula;
 }
 
 Formula::operator RPN() const
@@ -59,7 +64,6 @@ Formula::operator RPN() const
             idx--;
             std::optional<float> cell_value = Table::get_instance() -> get_cell_value(indexes.first, indexes.second);
             Cell* cell_ptr = Table::get_instance()->get_cell_ptr(indexes.first, indexes.second);
-            if (cell_ptr != nullptr)cell_ptr->takes_part_in(this);
             if (cell_value.has_value() == false)return RPN{ "1 0 /" };
             if (cell_value.value() < 0)
             {

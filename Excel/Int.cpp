@@ -1,8 +1,8 @@
 #include "Int.h"
 
-std::ostream& Int::do_print(std::ostream& out) const
+std::ostream& Int::do_print_to_stream(std::ostream& out) const
 {
-	if (sign != '0')out << sign;
+	if (sign != 0)out << sign;
 	out << value;
 	return out;
 }
@@ -41,7 +41,18 @@ uint32_t Int::do_get_length_in_symbols() const
 	return length;
 }
 
+void Int::do_print_to_file(std::ofstream& file) const
+{
+	do_print_to_stream(file);
+}
+
 Int::Int(int _value) : value{ _value }
 {
+}
+
+Int::Int(std::string str)
+{
+	uint32_t idx = 0;
+	value = get_number(str, idx, '\0');
 }
 

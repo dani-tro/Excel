@@ -1,6 +1,6 @@
 #include "Empty_cell.h"
 
-std::ostream& Empty_cell::do_print(std::ostream& out) const
+std::ostream& Empty_cell::do_print_to_stream(std::ostream& out) const
 {
 	return out;
 }
@@ -22,6 +22,10 @@ void Empty_cell::do_evaluate()
 uint32_t Empty_cell::do_get_length_in_symbols() const
 {
 	return 0;
+}
+
+void Empty_cell::do_print_to_file(std::ofstream& file) const
+{
 }
 
 

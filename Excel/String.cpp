@@ -1,6 +1,6 @@
 #include "String.h"
 
-std::ostream& String::do_print(std::ostream& out) const
+std::ostream& String::do_print_to_stream(std::ostream& out) const
 {
 	for (int i = 1; i < str.size() - 1; i++)
 	{
@@ -27,7 +27,6 @@ std::optional<float> String::do_get_value()
 
 void String::do_evaluate()
 {
-	if (is_calculated == true)return;
 	is_calculated = true;
 	calculated_value = float(*this);
 }
@@ -41,6 +40,11 @@ uint32_t String::do_get_length_in_symbols() const
 			str[i - 1] == '\\' || str[i] != '"' && str[i] != '\\')length++;
 	}
 	return length;
+}
+
+void String::do_print_to_file(std::ofstream& file) const
+{
+	file << str;
 }
 
 String::String(const std::string& _str) : str{_str}

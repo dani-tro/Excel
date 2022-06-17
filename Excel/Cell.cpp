@@ -5,14 +5,14 @@ std::optional<float> Cell::do_get_value()
 	return std::nullopt;
 }
 
-std::ostream& Cell::print(std::ostream& out) const
+std::ostream& Cell::print_to_stream(std::ostream& out) const
 {
-	return do_print(out);
+	return do_print_to_stream(out);
 }
 
 std::ostream& Cell::println(std::ostream& out) const
 {
-	print(out);
+	print_to_stream(out);
 	out << std::endl;
 	return out;
 }
@@ -27,16 +27,14 @@ std::optional<float> Cell::get_value()
 	return do_get_value();
 }
 
-void Cell::takes_part_in(const Cell* ptr)
-{
-	for (int i = 0; i < participates_in_formula.size(); i++)
-		if (participates_in_formula[i] == ptr)return;
-	participates_in_formula.push_back(ptr);
-}
-
 void Cell::evaluate()
 { 
 	do_evaluate();
+}
+
+void Cell::print_to_file(std::ofstream& file) const
+{
+	do_print_to_file(file);
 }
 
 uint32_t Cell::get_length_in_symbols() const
@@ -46,5 +44,5 @@ uint32_t Cell::get_length_in_symbols() const
 
 std::ostream& operator<<(std::ostream& out, const Cell& cell)
 {
-	return cell.print(out);
+	return cell.print_to_stream(out);
 }

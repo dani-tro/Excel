@@ -1,8 +1,8 @@
 #include "Float.h"
 
-std::ostream& Float::do_print(std::ostream& out) const
+std::ostream& Float::do_print_to_stream(std::ostream& out) const
 {
-    if (sign != '0')out << sign;
+    if (sign != 0)out << sign;
 	out << std::setprecision(float_fixed_precision) << std::fixed << value;
 	return out;
 }
@@ -49,6 +49,17 @@ uint32_t Float::do_get_length_in_symbols() const
     return length + float_fixed_precision + dot_length;
 }
 
+void Float::do_print_to_file(std::ofstream& file) const
+{
+    do_print_to_stream(file);
+}
+
 Float::Float(float _value) : value{_value}
 {
+}
+
+Float::Float(std::string str)
+{
+    uint32_t idx = 0;
+    value = get_number(str, idx, '\0');
 }
