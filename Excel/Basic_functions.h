@@ -11,6 +11,8 @@ bool is_operation(char);
 uint32_t priority(char);
 std::optional<float> perform_operation(float, char, float);
 std::pair<int, int> read_cell_indexes(const std::string&, uint32_t&);
+void tolower(std::string&);
+bool does_file_exist(const std::string&);
 
 #endif 
 
