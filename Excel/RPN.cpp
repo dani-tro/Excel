@@ -28,6 +28,7 @@ std::optional<float> RPN::evaluate() const
         }
         idx++;
     }
+    result = numbers.top();
     return result;
 }
 
