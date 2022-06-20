@@ -41,7 +41,7 @@ uint32_t Int::do_get_length_in_symbols() const
 	return length;
 }
 
-void Int::do_print_to_file(std::ofstream& file) const
+void Int::do_print_to_file(std::fstream& file) const
 {
 	do_print_to_stream(file);
 }
