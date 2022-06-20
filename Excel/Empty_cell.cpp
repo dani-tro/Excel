@@ -24,7 +24,7 @@ uint32_t Empty_cell::do_get_length_in_symbols() const
 	return 0;
 }
 
-void Empty_cell::do_print_to_file(std::ofstream& file) const
+void Empty_cell::do_print_to_file(std::fstream& file) const
 {
 }
 
