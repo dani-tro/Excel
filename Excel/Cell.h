@@ -13,7 +13,7 @@ private:
 	virtual std::istream& do_read_from_file(std::istream&) = 0;
 	virtual void do_evaluate() = 0;
 	virtual uint32_t do_get_length_in_symbols() const = 0;
-	virtual void do_print_to_file(std::ofstream&) const = 0;
+	virtual void do_print_to_file(std::fstream&) const = 0;
 public:
 	virtual ~Cell() noexcept = default;
 	std::ostream& print_to_stream(std::ostream& out = std::cout) const;
@@ -21,7 +21,7 @@ public:
 	std::istream& read_from_file(std::istream& in);
 	std::optional<float> get_value();
 	void evaluate();
-	void print_to_file(std::ofstream&) const;
+	void print_to_file(std::fstream&) const;
 	uint32_t get_length_in_symbols() const;
 };
 

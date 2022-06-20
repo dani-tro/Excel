@@ -32,7 +32,7 @@ void Cell::evaluate()
 	do_evaluate();
 }
 
-void Cell::print_to_file(std::ofstream& file) const
+void Cell::print_to_file(std::fstream& file) const
 {
 	do_print_to_file(file);
 }
