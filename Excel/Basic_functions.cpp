@@ -114,3 +114,20 @@ std::pair<int, int> read_cell_indexes(const std::string& str, uint32_t& begin)
 
 }
 
+void tolower(std::string& str)
+{
+    for (int i = 0; i < str.size(); i++)
+    {
+        if ('A' <= str[i] && str[i] <= 'Z')str[i] = (str[i] - 'A' + 'a');
+    }
+    return;
+}
+
+bool does_file_exist(const std::string& name)
+{
+    std::fstream file;
+    file.open(name);
+    bool result = file.is_open();
+    file.close();
+    return result;
+}
