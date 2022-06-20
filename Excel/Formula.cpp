@@ -44,7 +44,7 @@ uint32_t Formula::do_get_length_in_symbols() const
     return length + float_fixed_precision + dot_length;
 }
 
-void Formula::do_print_to_file(std::ofstream& file) const
+void Formula::do_print_to_file(std::fstream& file) const
 {
     file << formula;
 }
@@ -58,7 +58,7 @@ Formula::operator RPN() const
     while (idx < formula.size())
     {
         while (idx < formula.size() && formula[idx] == ' ')idx++;
-        if (formula[idx] == 'N')
+        if (formula[idx] == 'R')
         {
             std::pair<int, int> indexes = read_cell_indexes(formula, idx);
             idx--;

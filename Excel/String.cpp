@@ -42,7 +42,7 @@ uint32_t String::do_get_length_in_symbols() const
 	return length;
 }
 
-void String::do_print_to_file(std::ofstream& file) const
+void String::do_print_to_file(std::fstream& file) const
 {
 	file << str;
 }
