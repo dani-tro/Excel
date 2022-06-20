@@ -49,7 +49,7 @@ uint32_t Float::do_get_length_in_symbols() const
     return length + float_fixed_precision + dot_length;
 }
 
-void Float::do_print_to_file(std::ofstream& file) const
+void Float::do_print_to_file(std::fstream& file) const
 {
     do_print_to_stream(file);
 }
