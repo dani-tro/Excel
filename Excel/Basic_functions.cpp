@@ -131,3 +131,12 @@ bool does_file_exist(const std::string& name)
     file.close();
     return result;
 }
+
+void remove_spaces_at_the_ends(std::string& string)
+{
+    int32_t l = 0, r = string.size() - 1;
+    while (l <= r && string[l] == ' ')l++;
+    while (r >= l && string[r] == ' ')r--;
+    string = string.substr(l, r - l + 1);
+    return;
+}
