@@ -22,7 +22,10 @@ public:
 	String(const std::string&);
 	operator float() const;
 	friend std::istream& operator>>(std::istream& in, String&);
+	
 };
+
+bool is_valid_String(const std::string&);
 
 #endif
 

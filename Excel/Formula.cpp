@@ -52,7 +52,7 @@ void Formula::do_print_to_file(std::fstream& file) const
 Formula::operator RPN() const
 { 
     std::string result;
-    uint32_t idx = 1;
+    uint32_t idx = 1, last_result_size = 0;
     std::stack<char> operations;
     operations.push('(');
     while (idx < formula.size())
@@ -82,10 +82,11 @@ Formula::operator RPN() const
         }
         else if (is_operation(formula[idx]) == true)
         {
-            if (result.size() == 0)
+            if (result.size() == last_result_size)
             {
                 result += "0 ";
             }
+            last_result_size = result.size();
             while (operations.top() != '(' && priority(operations.top()) >= priority(formula[idx]))
             {
                 result += operations.top();
@@ -137,4 +138,58 @@ std::istream& operator>>(std::istream& in, Formula& f)
     }
     in.get();
     return in;
+}
+
+
+bool is_valid_Formula(const std::string& formula)
+{
+    bool opened_quotes = false;
+    for (uint32_t i = 1; i < formula.size(); i++)
+    {
+        if (is_digit(formula[i]) == false && is_operation(formula[i]) == false && 
+            formula[i] != '(' && formula[i] != ')' && formula[i] != '\"' && formula[i] != ' '
+            && formula[i] != '.' && formula[i] != 'R' && formula[i] != 'C' && opened_quotes == false)return false;
+        if (formula[i] == '\"')opened_quotes = !opened_quotes;
+    }
+    uint32_t opened_brackets = 0;
+    for (uint32_t i = 0; i < formula.size(); i++)
+    {
+        if (formula[i] == '(')opened_brackets++;
+        else if (formula[i] == ')')opened_brackets--;
+        if (opened_brackets < 0)return false;
+    }
+    if (opened_brackets != 0)return false;
+    for (uint32_t i = 0; i < formula.size(); i++)
+    {
+        if (formula[i] == 'R')
+        {
+            float row, column;
+            row = get_number(formula, ++i);
+            if (formula[i] != 'C')return false;
+            column = get_number(formula, ++i);
+            if (row <= 0 || column <= 0)return false;
+            if (fabs(row - int(row)) > eps || fabs(column - int(column)) > eps)return false;
+     
+        }
+    }
+    uint32_t number_of_values = 0, number_of_operations = 0;
+    for (uint32_t i = 1; i < formula.size(); i++)
+    {
+        if (is_operation(formula[i]) == true)number_of_operations++;
+        else if (is_digit(formula[i]) == true)
+        {
+            number_of_values++;
+            get_number(formula, i);
+            i--;
+        }
+        else if (formula[i] == 'R')
+        {
+            number_of_values++;
+            get_number(formula, ++i);
+            get_number(formula, ++i);
+            i--;
+        }
+    }
+    if (number_of_operations < number_of_values - 1)return false;
+    return true;
 }

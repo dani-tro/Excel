@@ -7,6 +7,7 @@
 #include "Table.h"
 
 constexpr uint32_t error_message_length = 5;
+constexpr float eps = 0.000001;
 
 class Formula : public Cell
 {
@@ -30,6 +31,8 @@ public:
 	operator RPN() const;
 	friend std::istream& operator>>(std::istream& in, Formula&);
 };
+
+bool is_valid_Formula(const std::string&);
 
 #endif
 

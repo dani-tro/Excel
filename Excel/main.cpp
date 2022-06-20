@@ -1,37 +1,11 @@
-#include <iostream>
-#include <iomanip>
-
-
-#include "RPN.h"
-#include "String.h"
-#include "Formula.h"
+#include "Command_executor.h"
 
 int main()
 {
-	/*
-	
-	RPN a{"3 4 2 * 1 5 - / 2 3 ^ ^ +"};
-	String a{"1342.626"};
-	std::cout << a.get_value().value() << std::endl;
-	
-	*/
 
-	
+	Command_executor::get_instance() -> run();
+	Command_executor::free();
 
-	std::string a = "=+1+2+3+4+\"123abc\"";
-	Cell* ptr = new Formula(a);
-	std::cout << ptr -> get_value().value() << std::endl;
-	ptr->println();
 	return 0;
 }
 
-/*
-
-
-3 + ( ( 4 * 2 ) / ( 1 - 5 ) ) ^ ( 2 ^ 3 )
-
-3 4 2 * 1 5 - / 2 3 ^ ^ +
-
-3 4 2 * 1 5 - / 2 3 ^ ^ +
-
-*/

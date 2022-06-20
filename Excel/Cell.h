@@ -16,6 +16,7 @@ private:
 	virtual void do_print_to_file(std::fstream&) const = 0;
 public:
 	virtual ~Cell() noexcept = default;
+
 	std::ostream& print_to_stream(std::ostream& out = std::cout) const;
 	std::ostream& println(std::ostream& out = std::cout) const;
 	std::istream& read_from_file(std::istream& in);

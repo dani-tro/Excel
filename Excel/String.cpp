@@ -57,6 +57,15 @@ String::operator float() const
 	return get_number(str, idx, '"');
 }
 
+bool is_valid_String(const std::string& string)
+{
+	if (string[string.size() - 1] != '\"')return false;
+	bool opened_quote = false;
+	for (int i = 0; i < string.size(); i++)if (string[i] == '\"')opened_quote = !opened_quote;
+	if (opened_quote == true)return false;
+	return true;
+}
+
 std::istream& operator>>(std::istream& in, String& s)
 {
 	while (in.peek() == ',' || in.peek() == '\n')

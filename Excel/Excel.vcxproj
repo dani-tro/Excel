@@ -21,8 +21,11 @@
   <ItemGroup>
     <ClInclude Include="Basic_functions.h" />
     <ClInclude Include="Cell.h" />
+    <ClInclude Include="Empty_cell.h" />
     <ClInclude Include="Float.h" />
     <ClInclude Include="Formula.h" />
+    <ClInclude Include="Command_executor.h" />
+    <ClInclude Include="Command_line.h" />
     <ClInclude Include="Int.h" />
     <ClInclude Include="Libraries.h" />
     <ClInclude Include="RPN.h" />
@@ -32,6 +35,9 @@
   <ItemGroup>
     <ClCompile Include="Basic_functions.cpp" />
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="Command_executor.cpp" />
+    <ClCompile Include="Command_line.cpp" />
+    <ClCompile Include="Empty_cell.cpp" />
     <ClCompile Include="Float.cpp" />
     <ClCompile Include="Formula.cpp" />
     <ClCompile Include="Int.cpp" />

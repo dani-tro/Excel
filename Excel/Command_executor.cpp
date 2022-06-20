@@ -2,9 +2,63 @@
 
 Command_executor* Command_executor::instance = nullptr;
 
-inline bool is_file_valid(const std::string)
+ bool is_file_valid(const std::string& file_name)
 {
+    if (does_file_exist(file_name) == false)return true;
+    std::string value;
+    std::fstream file{ file_name, std::ios::in };
+    uint32_t row = 1, column = 1;
+    while (!file.eof())
+    {
+        while (file.peek() == ' ')file.get();
+        while (file.peek() != ',' && file.peek() != '\n' && file.peek() != -1)value += file.get();
+
+        remove_spaces_at_the_ends(value);
+        
+        if (is_valid_value(value) == false)
+        {
+            std::cout << "Error: row " << row << ", col " << column << ", " << value << " is unknown data type!\n";
+            std::string left, right;
+            for (int i = 0; i <= value.size(); i++)
+            {
+                left = value.substr(0, i);
+                right = value.substr(i, value.size() - i);
+                remove_spaces_at_the_ends(left);
+                remove_spaces_at_the_ends(right);
+                if (is_valid_value(left) == true && is_valid_value(right) == true)
+                {
+                    std::cout << "Maybe you forgot a comma after " << left << " and before " << right << std::endl;
+                    return false;
+                }
+            }
+            return false;
+        }
+       
+        value = "";
+        if (file.peek() == ',')column++;
+        else if (file.peek() == '\n')row++, column = 1;
+        file.get();
+    }
     return true;
+}
+
+bool is_valid_value(const std::string& value)
+{
+    if (value == "")return true;
+    if (value[0] == '\"')return is_valid_String(value);
+    if (value[0] == '=')return is_valid_Formula(value);
+    if (is_digit(value[0]) == true || value[0] == '-' || value[0] == '+')
+    {
+        uint32_t number_of_dots = 0;
+        for (int i = 1; i < value.size(); i++)
+        {
+            if (value[i] == '.')number_of_dots++;
+            else if (is_digit(value[i]) == false)return false;
+        }
+        if (number_of_dots > 1)return false;
+        return true;
+    }
+    return false;
 }
 
 Command_executor* Command_executor::get_instance()
@@ -25,7 +79,9 @@ void Command_executor::execute(const Command_line& cl)
     if (command == "open")
     {
         if (cl.get_number_of_arguments() > 2)std::cout << cl.get_number_of_arguments() - 2 << " redundant arguments omitted!\n";
-        open(cl[1]);
+        
+        if (cl[1][0] == '\"')open(cl[1].substr(1, cl[1].size() - 2));
+        else open(cl[1]);
     }
     else if (command == "close")
     {
@@ -40,7 +96,8 @@ void Command_executor::execute(const Command_line& cl)
     else if (command == "saveas")
     {
         if (cl.get_number_of_arguments() > 2)std::cout << cl.get_number_of_arguments() - 2 << " redundant arguments omitted!\n";
-        saveas(cl[1]);
+        if (cl[1][0] == '\"')saveas(cl[1].substr(1, cl[1].size() - 2));
+        else saveas(cl[1]);
     }
     else if (command == "help")
     {
@@ -84,6 +141,11 @@ void Command_executor::execute(const Command_line& cl)
             return;
         }
         if (cl.get_number_of_arguments() > 3)std::cout << cl.get_number_of_arguments() - 3 << " redundant arguments omitted!\n";
+        if (is_valid_value(cl[2]) == false)
+        {
+            std::cout << "Invalid value entered!\n";
+            return;
+        }
         edit(row, column, cl[2]);
     }
     return;
@@ -138,7 +200,11 @@ bool Command_executor::is_valid(const Command_line& cl) const
 
 void Command_executor::open(const std::string& file_name)
 {
-    if (is_file_valid(file_name) == false)return;
+    if (is_file_valid(file_name) == false)
+    {
+        exit();
+        return;
+    }
     Table::get_instance()->open_file(file_name, std::ios::in);
     Table::get_instance()->read_from_file();
     Table::get_instance()->close_file();

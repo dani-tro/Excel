@@ -2,7 +2,6 @@
 
 std::optional<float> RPN::evaluate() const
 {
-    
     float tmp, lhs, rhs;
     std::optional<float> result = 0;
     std::stack<float> numbers;
