@@ -7,5 +7,7 @@
 #include <optional>
 #include <string>
 #include <iomanip>
+#include <fstream>
+#include <memory>
 
 #endif
